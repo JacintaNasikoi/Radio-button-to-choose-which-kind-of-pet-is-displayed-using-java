@@ -1,0 +1,74 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class PetSelector extends JFrame {
+    private JLabel petLabel;
+    private JRadioButton birdButton, catButton, dogButton, rabbitButton, pigButton;
+
+    public PetSelector() {
+        setTitle("Pet Selector");
+        setSize(300, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Create radio buttons
+        birdButton = new JRadioButton("Bird");
+        catButton = new JRadioButton("Cat");
+        dogButton = new JRadioButton("Dog");
+        rabbitButton = new JRadioButton("Rabbit");
+        pigButton = new JRadioButton("Pig");
+
+        // Group the radio buttons
+        ButtonGroup group = new ButtonGroup();
+        group.add(birdButton);
+        group.add(catButton);
+        group.add(dogButton);
+        group.add(rabbitButton);
+        group.add(pigButton);
+
+        // Panel for radio buttons
+        JPanel radioPanel = new JPanel(new GridLayout(5, 1));
+        radioPanel.add(birdButton);
+        radioPanel.add(catButton);
+        radioPanel.add(dogButton);
+        radioPanel.add(rabbitButton);
+        radioPanel.add(pigButton);
+
+        add(radioPanel, BorderLayout.WEST);
+
+        // Label to display the selected pet
+        petLabel = new JLabel("", JLabel.CENTER);
+        add(petLabel, BorderLayout.CENTER);
+
+        // Action listeners for radio buttons
+        birdButton.addActionListener(new PetActionListener("Bird"));
+        catButton.addActionListener(new PetActionListener("Cat"));
+        dogButton.addActionListener(new PetActionListener("Dog"));
+        rabbitButton.addActionListener(new PetActionListener("Rabbit"));
+        pigButton.addActionListener(new PetActionListener("Pig"));
+    }
+
+    private class PetActionListener implements ActionListener {
+        private String pet;
+
+        public PetActionListener(String pet) {
+            this.pet = pet;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            petLabel.setText("Selected Pet: " + pet);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new PetSelector().setVisible(true);
+            }
+        });
+    }
+}
